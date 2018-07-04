@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Toolbar, ToolbarBackAction, ToolbarContent, ToolbarAction } from 'react-native-paper';
 
 import { Text, View, Button,StyleSheet, Image } from 'react-native';
 
@@ -21,13 +22,17 @@ export default class History extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Notifications Screen</Text>
-        <Button
-        onPress={() => this.props.navigation.goBack()}
-        title="Go back home"
+      <Toolbar>
+        <ToolbarBackAction
+          onPress={this._goBack}
         />
-      </View> 
+        <ToolbarContent
+          title="Title"
+          subtitle="Subtitle"
+        />
+        <ToolbarAction icon="search" onPress={this._onSearch} />
+        <ToolbarAction icon="more-vert" onPress={this._onMore} />
+      </Toolbar>
     );
   }
 }
