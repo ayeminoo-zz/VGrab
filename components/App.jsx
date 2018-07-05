@@ -1,10 +1,22 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Text, View } from 'react-native';
+import {
+  Paper,
+  FAB
+} from 'react-native-paper';
 
 const App = (props) =>{
+  let fab = props.showFab ? <FAB style={{zIndex:5,  position: 'absolute', bottom: 30, right:30}}
+            large
+            icon="add"
+            onPress={() => {}}
+          />: null;
   return (
     <View style={{flex:1}}>
+        
+        {fab}
+
         <View style={{backgroundColor:'#0039cb', flexDirection: 'row', height: 20}}/>
         <View
           style={{

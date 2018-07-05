@@ -55,8 +55,10 @@ export default class Cart extends React.Component {
 
   render() {
     return (
-    	<App navigation = {this.props.navigation}>
+    	<App navigation = {this.props.navigation} showFab={true}>
 			<View style={{ height: '100%', padding: 10}}>
+
+			
 				<Paper style={styles.paper}>
 				     <Image style={styles.stretch} source={require('../images/shirt.jpg')} />
 				     <View style={styles.rightContainer}>
