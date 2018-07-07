@@ -16,6 +16,8 @@ import { ScrollView, TouchableOpacity, View,StyleSheet, Image } from 'react-nati
 import Button from '../pureComponents/Button';
 import CartView from '../pureComponents/CartView';
 import ItemView from '../pureComponents/ItemView';
+import products from '../services/products';
+import InMemoryData from '../services/InMemoryData';
 
 const styles = StyleSheet.create({
   icon: {
@@ -51,10 +53,22 @@ const styles = StyleSheet.create({
 export default class Home extends React.Component {
 
   async componentDidMount(){
-    Linking.getInitialURL().then(url => {
-      this._navigate(url);
-    });
+    if(!InMemoryData.appLoaded){
+      Linking.getInitialURL().then(url => {
+        console.log("url", url);
+        this._navigate(url);
+        InMemoryData.appLoaded = true;
+      });  
+    }
+    
     Linking.addEventListener('url', this._handleRedirect);
+
+    if(this.props.navigation.state.params && this.props.navigation.state.params.id){
+      InMemoryData.carts[InMemoryData.activeCartId].items.push(products[this.props.navigation.state.params.id]);
+      this.props.navigation.state.params = null;
+    }
+
+    this.state.items = InMemoryData.carts[InMemoryData.activeCartId].items;
 
     await Font.loadAsync({
       'DroidSerif-Bold': require('../fonts/DroidSerif-Bold.ttf'),
@@ -71,6 +85,7 @@ export default class Home extends React.Component {
   state = {
     redirectData: null,
     loaded: false,
+    items: []
   };
 
   static navigationOptions = {
@@ -85,49 +100,18 @@ export default class Home extends React.Component {
 
   render() {
     if(!this.state.loaded) return <View/>;
-    if(this.state.hasCameraPermission === null || this.state.hasCameraPermission === false) return <Text> Please allow VGrab to use camera </Text>; 
+    let items =  Array.from(this.state.items, item => 
+                    <ItemView key={item.id}
+                      imageSource={{uri: item.image}}
+                      cost={item.price}
+                      quantity={1}
+                      name={item.name}
+                    />
+                );
     return (
-      <App navigation = {this.props.navigation} showFab={true} onFabClick={()=>this.props.navigation.navigate('QRScanner')}>
+      <App navigation = {this.props.navigation} showFab={true} onFabClick={()=>this.props.navigation.navigate('QRScanner', {name: 'just testing'})}>
       <ScrollView >
-          <ItemView
-            imageSource={require('../images/shirt.jpg')}
-            cost={20}
-            quantity={4}
-            name="Uno shirt"
-
-          />
-          
-          <ItemView
-            imageSource={require('../images/shirt.jpg')}
-            cost={20}
-            quantity={4}
-            name="Uno shirt"
-
-          />
-
-          <ItemView
-            imageSource={require('../images/shirt.jpg')}
-            cost={20}
-            quantity={4}
-            name="Uno shirt"
-
-          />
-
-          <ItemView
-            imageSource={require('../images/shirt.jpg')}
-            cost={20}
-            quantity={4}
-            name="Uno shirt"
-
-          />
-
-          <ItemView
-            imageSource={require('../images/shirt.jpg')}
-            cost={20}
-            quantity={4}
-            name="Uno shirt"
-
-          />
+          {items}
 
       </ScrollView>
 
@@ -143,14 +127,13 @@ export default class Home extends React.Component {
     );
   }
 
-  _handleBarCodeRead = ({ type, data }) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  }
-
   _navigate = (url) => {
+    console.log(url);
     let data = Linking.parse(url);
-    console.log("data", data);
-    this.setState({ redirectData: data }); 
+    console.log("navigate data", data);
+    if(!data.queryParams || !data.queryParams.id) return;
+    InMemoryData.carts[InMemoryData.activeCartId].items.push(products[data.queryParams.id]);
+    // this.setState({ items: InMemoryData.carts[InMemoryData.activeCartId].items});
   }
 
   _maybeRenderRedirectData = () => {
@@ -162,9 +145,13 @@ export default class Home extends React.Component {
   };
 
   _handleRedirect = event => {
+    console.log(event.url);
     WebBrowser.dismissBrowser();
     let data = Linking.parse(event.url);
-    console.log("data", data);
-    this.setState({ redirectData: data });
+    console.log("redirectData", data);
+    if(!data.queryParams || !data.queryParams.id) return;
+    InMemoryData.carts[InMemoryData.activeCartId].items.push(products[data.queryParams.id]);
+    this.setState({ items: InMemoryData.carts[InMemoryData.activeCartId].items});
+
   };
 }

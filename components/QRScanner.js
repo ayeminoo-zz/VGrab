@@ -28,6 +28,8 @@ export default class QRScanner extends React.Component {
     ),
   };
 
+  regex = /^exp.*?\?id=/
+
   state = {
     hasCameraPermission: null
   };
@@ -66,6 +68,7 @@ export default class QRScanner extends React.Component {
 
   componentDidMount() {
     this._requestCameraPermission();
+    // Alert.alert("ok", JSON.stringify(this.props.navigation.state.params.name));
   }
 
   _requestCameraPermission = async () => {
@@ -76,11 +79,15 @@ export default class QRScanner extends React.Component {
   };
 
   _handleBarCodeRead = data => {
-    Alert.alert(
-      'Scan successful!',
-      JSON.stringify(data)
-    );
+    console.log(data);
+    console.log("regex", this.regex);
+    if(!data || !data.data) return;
+    console.log(data.data);
+    let found = this.regex.test(data.data);
+    console.log("found", found)
+    if(!found) return;
+    let id = data.data.replace(this.regex, "");
+    console.log("id", id);
+    this.props.navigation.navigate('Home', {id: id});
   };
-
-
 }
