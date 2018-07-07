@@ -10,10 +10,10 @@ const App = (props) =>{
   let fab = props.showFab ? <FAB style={{zIndex:5,  position: 'absolute', bottom: 30, right:30}}
             large
             icon="add"
-            onPress={() => {}}
+            onPress={props.onFabClick}
           />: null;
   return (
-    <View style={{flex:1}}>
+      <View style={{flex:1}}>
         
         {fab}
 

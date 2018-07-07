@@ -22,17 +22,21 @@ export default class History extends React.Component {
 
   render() {
     return (
-      <Toolbar>
-        <ToolbarBackAction
-          onPress={this._goBack}
-        />
-        <ToolbarContent
-          title="Title"
-          subtitle="Subtitle"
-        />
-        <ToolbarAction icon="search" onPress={this._onSearch} />
-        <ToolbarAction icon="more-vert" onPress={this._onMore} />
-      </Toolbar>
+      <View>
+        <Toolbar>
+          <ToolbarBackAction
+            onPress={this._goBack}
+          />
+          <ToolbarContent
+            title="Title"
+            subtitle="Subtitle"
+          />
+          <ToolbarAction icon="search" onPress={this._onSearch} />
+          <ToolbarAction icon="more-vert" onPress={this._onMore} />
+        </Toolbar> 
+        <Text> ok ok</Text>
+      </View>
+      
     );
   }
 }

@@ -9,9 +9,10 @@ import {
 
 
 import App from './App'
-import { TouchableOpacity, View,StyleSheet, Image } from 'react-native';
+import { ScrollView, TouchableOpacity, View,StyleSheet, Image } from 'react-native';
 
-import Button from './Button';
+import Button from '../pureComponents/Button';
+import CartView from '../pureComponents/CartView';
 
 const styles = StyleSheet.create({
   icon: {
@@ -56,26 +57,14 @@ export default class Cart extends React.Component {
   render() {
     return (
     	<App navigation = {this.props.navigation} showFab={true}>
-			<View style={{ height: '100%', padding: 10}}>
-
+			<ScrollView	>
 			
-				<Paper style={styles.paper}>
-				     <Image style={styles.stretch} source={require('../images/shirt.jpg')} />
-				     <View style={styles.rightContainer}>
-				     	<Text style={{fontSize:20, fontWeight:'bold'}}> FDay Cart </Text>
-				     	<View style={{flexDirection:'row'}}>
-					     	<Icon name={'shopping-cart'} size={20} style={{color:'#a8adb5'}}/> 
-					     	<Text style={{color:'#a8adb5'}}>  4 items </Text>
-				     	</View>
-				     	<View style={{flexDirection: 'row-reverse'}}> 
-				     		<Text style={{fontFamily:'changa-one-regular', fontSize: 16}}>$ 323</Text>
-				     	</View>
-				     	<View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-				     		<Button title="Default" style={{borderColor: 'grey'}}/>
-				     		<Button title="Delete" /> 
-				     	</View>
-				     </View>
-				  </Paper>
+				<CartView 
+					imageSource={require('../images/shirt.jpg')}	 
+					name = "Another Cart"
+					numberOfItem = {10}
+					totalCost = {100}
+					/>
 
 				  <Paper style={styles.paper}>
 				     <Image style={styles.stretch} source={require('../images/shirt.jpg')} />
@@ -132,8 +121,7 @@ export default class Cart extends React.Component {
 				     </View>
 				  </Paper>
 
-
-			</View>
+			</ScrollView>
     	</App>
       
     );
