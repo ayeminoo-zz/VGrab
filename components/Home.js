@@ -104,10 +104,13 @@ export default class Home extends React.Component {
                     <ItemView key={item.id}
                       imageSource={{uri: item.image}}
                       cost={item.price}
-                      quantity={1}
+                      quantity={item.quantity}
                       name={item.name}
-                    />
-                );
+                    />);
+    let totalCost = 0;
+    this.state.items.forEach(item=>{
+      totalCost += item.price * item.quantity;
+    });
     return (
       <App navigation = {this.props.navigation} showFab={true} onFabClick={()=>this.props.navigation.navigate('QRScanner', {name: 'just testing'})}>
       <ScrollView >
@@ -118,7 +121,7 @@ export default class Home extends React.Component {
         <Paper style={{elevation:3, justifyContent:'center', alignItems:'center', flexDirection: 'row', width:'100%', height: 50, flex:1, position:'absolute', bottom:0}}>
           <View style={{paddingLeft:10, paddingRight:10, position:'absolute', left:0}}>
             <Text style={{fontSize:16, color:'#545456'}}> Total </Text>
-            <Text style={{paddingLeft:8, fontFamily:'changa-one-regular', fontSize: 16}}>$ 640</Text>
+            <Text style={{paddingLeft:8, fontFamily:'changa-one-regular', fontSize: 16}}>$ {totalCost}</Text>
           </View>
           <Button style={{alignItems:'center', backgroundColor:'#2962ff', borderColor:'#2962ff', width:150}} color='white'> Checkout 
           </Button>
@@ -132,8 +135,7 @@ export default class Home extends React.Component {
     let data = Linking.parse(url);
     console.log("navigate data", data);
     if(!data.queryParams || !data.queryParams.id) return;
-    InMemoryData.carts[InMemoryData.activeCartId].items.push(products[data.queryParams.id]);
-    // this.setState({ items: InMemoryData.carts[InMemoryData.activeCartId].items});
+    this._addToCart(data.queryParams.id);
   }
 
   _maybeRenderRedirectData = () => {
@@ -150,8 +152,29 @@ export default class Home extends React.Component {
     let data = Linking.parse(event.url);
     console.log("redirectData", data);
     if(!data.queryParams || !data.queryParams.id) return;
-    InMemoryData.carts[InMemoryData.activeCartId].items.push(products[data.queryParams.id]);
+    this._addToCart(data.queryParams.id);
     this.setState({ items: InMemoryData.carts[InMemoryData.activeCartId].items});
 
   };
+
+  _addToCart = function(id){
+    id = typeof id === 'string'? parseInt(id) : id;
+    let items = InMemoryData.carts[InMemoryData.activeCartId].items;
+    let found = false;
+    items.forEach(item => {
+      console.log(id + " " + item.id, id === item.id)
+      if(id === item.id) {
+        item.quantity += 1; 
+        found = true;
+        console.log("found", found);
+      }
+    });
+    
+    if(!found){
+      console.log("still")
+      products[id].quantity = 1;
+      items.push(products[id]);
+    }
+    
+  }
 }

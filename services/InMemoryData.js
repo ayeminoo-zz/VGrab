@@ -12,7 +12,8 @@ export default  {
 		            "price": 50,
 		            "image": "https://res.cloudinary.com/debray/image/upload/v1530593949/image-11.jpg",
 		            "merchId": "1",
-		            "category": "clothes"
+		            "category": "clothes", 
+		            "quantity": 1
 		        }
 			]
 		}

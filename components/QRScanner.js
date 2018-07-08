@@ -2,7 +2,8 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Toolbar, ToolbarBackAction, ToolbarContent, ToolbarAction } from 'react-native-paper';
-import { Constants, BarCodeScanner, Permissions } from 'expo';
+import { Constants,Linking, BarCodeScanner, Permissions } from 'expo';
+
   
 import { View, Button,StyleSheet, Alert, Image } from 'react-native';
 import {
@@ -56,7 +57,7 @@ export default class QRScanner extends React.Component {
               this.state.hasCameraPermission === false ?
                 <Text>Camera permission is not granted</Text> :
                 <BarCodeScanner
-                  onBarCodeRead={this._handleBarCodeRead}
+                  onBarcodeRead={this._handleBarCodeRead}
                   style={{ height: 200, width: 200 }}
                 />
             }
@@ -79,15 +80,22 @@ export default class QRScanner extends React.Component {
   };
 
   _handleBarCodeRead = data => {
-    console.log(data);
-    console.log("regex", this.regex);
-    if(!data || !data.data) return;
-    console.log(data.data);
-    let found = this.regex.test(data.data);
-    console.log("found", found)
-    if(!found) return;
-    let id = data.data.replace(this.regex, "");
-    console.log("id", id);
-    this.props.navigation.navigate('Home', {id: id});
+
+    data = Linking.parse(data.data);
+    console.log("data", data)
+    if(!data.queryParams || !data.queryParams.id)
+    this.props.navigation.navigate('Home', {id: data.queryParams.id});
+
+
+    // console.log(data);
+    // console.log("regex", this.regex);
+    // if(!data || !data.data) return;
+    // console.log(data.data);
+    // let found = this.regex.test(data.data);
+    // console.log("found", found)
+    // if(!found) return;
+    // let id = data.data.replace(this.regex, "");
+    // console.log("id", id);
+    // this.props.navigation.navigate('Home', {id: id});
   };
 }
