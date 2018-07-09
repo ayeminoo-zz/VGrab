@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flexGrow: 5, 
-    height:'100%', 
     flex: 1,
     padding:4, 
     paddingLeft:30,
@@ -44,15 +43,15 @@ const styles = StyleSheet.create({
 
 const ItemView = (props) =>  {
   const newStyles = props.style || {};
-  let {imageSource, name, quantity, cost, onAdd, onRemove} = props;
+  let {imageSource, name, quantity, cost, onAdd, onRemove, onDelete} = props;
 
   return (
           <Paper style={styles.paper}>
              <Image style={styles.stretch} source={imageSource} />
              <View style={styles.rightContainer}>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight: 5}}>
                   <Text style={{fontSize:18, color:'#545456'}}> {name}</Text>
-                  <Button style={{padding:0, borderColor: 'transparent'}}><Icon name="clear" size={18}  color='#a8adb5'/> </Button>
+                  <Button onPress={onDelete} style={{padding:0, borderColor: 'transparent'}}><Icon name="clear" size={18}  color='#a8adb5'/> </Button>
               </View>
 
               <Text style={{paddingLeft: 5, color:'#a8adb5'}}> $ {cost} / per  </Text>

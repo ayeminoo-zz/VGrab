@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import {
   Paper,
   FAB
@@ -23,13 +23,15 @@ const App = (props) =>{
             backgroundColor: '#2962ff',
             flexDirection: 'row',
             justifyContent: 'space-between',
-            height: 37
+            alignItems:'center',
+            height: 50
           }}>
 
           <Icon.Button size={25} backgroundColor='transparent' name="menu" onPress={() => props.navigation.toggleDrawer()} />
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
-            <Text style={{color:'white', fontWeight:'bold', fontSize:18}}>VGrab</Text>
+            <Image source ={require('../images/logo.png')} style={{width:90, height:40}} />
           </View>
+
           
         </View>
           {props.children}
