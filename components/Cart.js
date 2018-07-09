@@ -7,12 +7,13 @@ import {
   FAB
 } from 'react-native-paper';
 
-
+import InputAlert from '../pureComponents/InputAlert';
 import App from './App'
 import { ScrollView, TouchableOpacity, View,StyleSheet, Image } from 'react-native';
 
 import Button from '../pureComponents/Button';
 import CartView from '../pureComponents/CartView';
+import InMemoryData from '../services/InMemoryData';
 
 const styles = StyleSheet.create({
   icon: {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     height: 24,
   },
   paper: {
-  	flexDirection:'row',
+    flexDirection:'row',
     padding: 8,
     height: 140,
 
@@ -30,14 +31,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   rightContainer: {
-  	flexGrow: 5, 
-  	height:'100%', 
-  	flex: 1,
-  	padding:4, 
-  	paddingLeft:30,
-  	paddingRight:10,
-  	justifyContent:'space-between', 
-  	alignItems:'stretch',
+    flexGrow: 5, 
+    height:'100%', 
+    flex: 1,
+    padding:4, 
+    paddingLeft:30,
+    paddingRight:10,
+    justifyContent:'space-between', 
+    alignItems:'stretch',
   },
   stretch: {
     width: 120,
@@ -47,6 +48,12 @@ const styles = StyleSheet.create({
 
 
 export default class Cart extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this._addNewCard = this._addNewCard.bind(this);
+  }
+
   static navigationOptions = {
     drawerLabel: 'My Carts',
     drawerIcon: ({ tintColor }) => (
@@ -54,76 +61,72 @@ export default class Cart extends React.Component {
     ),
   };
 
+  componentDidMount(){
+    this.setState({carts: this.getCarts()})
+  }
+
+  state = {
+    carts:{},
+    newCartName:'',
+    dialogVisiable: false
+  }
+
+  getCarts = function(){
+    let carts = [];
+    for (var id in InMemoryData.carts) {
+      if( InMemoryData.carts.hasOwnProperty(id) ) {
+        InMemoryData.carts[id].id = id;
+        InMemoryData.carts[id].total = this._getTotalCost(InMemoryData.carts[id].items);
+        carts.push(InMemoryData.carts[id]);
+      } 
+    }   
+    return carts;
+  }
+
+  _getTotalCost = function(items){
+    let total = 0;
+    items.map((item)=>{total += item.price * item.quantity})
+    return total;
+  }
+
+  _addNewCard = function(){
+    InMemoryData.carts[new Date().getTime()] = {name: this.state.newCartName, items:[]};
+    this.state.newCartName = '';
+    this.state.dialogVisiable = false;
+    this.setState({carts: this.getCarts()})
+  }
+
   render() {
+    let carts = Array.from(this.state.carts, cart => 
+      <CartView 
+        key = {cart.id}
+        imageSource={require('../images/shirt.jpg')}   
+        name = {cart.name}
+        numberOfItem = {cart.items.length}
+        totalCost = {cart.total}
+      />
+    );
     return (
-    	<App navigation = {this.props.navigation} showFab={true}>
-			<ScrollView	>
-			
-				<CartView 
-					imageSource={require('../images/shirt.jpg')}	 
-					name = "Another Cart"
-					numberOfItem = {10}
-					totalCost = {100}
-					/>
-
-				  <Paper style={styles.paper}>
-				     <Image style={styles.stretch} source={require('../images/shirt.jpg')} />
-				     <View style={styles.rightContainer}>
-				     	<Text style={{fontSize:20, fontWeight:'bold'}}> FDay Cart </Text>
-				     	<View style={{flexDirection:'row'}}>
-					     	<Icon name={'shopping-cart'} size={20} style={{color:'#a8adb5'}}/> 
-					     	<Text style={{color:'#a8adb5'}}>  4 items </Text>
-				     	</View>
-				     	<View style={{flexDirection: 'row-reverse'}}> 
-				     		<Text style={{fontFamily:'changa-one-regular', fontSize: 16}}>$ 323</Text>
-				     	</View>
-				     	<View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-				     		<Button title="Default" style={{borderColor: 'grey'}}/>
-				     		<Button title="Delete" /> 
-				     	</View>
-				     </View>
-				  </Paper>
-
-
-				  <Paper style={styles.paper}>
-				     <Image style={styles.stretch} source={require('../images/shirt.jpg')} />
-				     <View style={styles.rightContainer}>
-				     	<Text style={{fontSize:20, fontWeight:'bold'}}> FDay Cart </Text>
-				     	<View style={{flexDirection:'row'}}>
-					     	<Icon name={'shopping-cart'} size={20} style={{color:'#a8adb5'}}/> 
-					     	<Text style={{color:'#a8adb5'}}>  4 items </Text>
-				     	</View>
-				     	<View style={{flexDirection: 'row-reverse'}}> 
-				     		<Text style={{fontFamily:'changa-one-regular', fontSize: 16}}>$ 323</Text>
-				     	</View>
-				     	<View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-				     		<Button title="Default" style={{borderColor: 'grey'}}/>
-				     		<Button title="Delete" /> 
-				     	</View>
-				     </View>
-				  </Paper>
-
-				  <Paper style={styles.paper}>
-				     <Image style={styles.stretch} source={require('../images/shirt.jpg')} />
-				     <View style={styles.rightContainer}>
-				     	<Text style={{fontSize:20, fontWeight:'bold'}}> FDay Cart </Text>
-				     	<View style={{flexDirection:'row'}}>
-					     	<Icon name={'shopping-cart'} size={20} style={{color:'#a8adb5'}}/> 
-					     	<Text style={{color:'#a8adb5'}}>  4 items </Text>
-				     	</View>
-				     	<View style={{flexDirection: 'row-reverse'}}> 
-				     		<Text style={{fontFamily:'changa-one-regular', fontSize: 16}}>$ 323</Text>
-				     	</View>
-				     	<View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-				     		<Button title="Default" style={{borderColor: 'grey'}}/>
-				     		<Button title="Delete" /> 
-				     	</View>
-				     </View>
-				  </Paper>
-
-			</ScrollView>
-    	</App>
+      <App navigation = {this.props.navigation}
+        onFabClick={()=>this.setState({dialogVisiable: true})}
+        showFab={true}>
       
+        {this.state.dialogVisiable && 
+          <InputAlert 
+          title='Enter your cart name'
+          value={this.state.newCartName}
+          onOk = {this._addNewCard}
+          onCancle = {()=>{this.state.newCartName=''; this.setState({dialogVisiable: false})}}
+          onChangeText = {(text) => {this.setState({newCartName: text})}}
+          ok = 'OK'
+          cancle = 'Cancle'
+          />
+        }
+        
+      <ScrollView style={{backgroundColor:'#f4f5f7'}}>
+        {carts}
+      </ScrollView>
+      </App>
     );
   }
 }

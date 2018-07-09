@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
   	flexDirection:'row',
     padding: 8,
     height: 140,
-
+    marginLeft:5,
+    marginRight:5,
     alignItems: 'center',
     justifyContent: 'space-between',
     elevation: 2,
@@ -22,8 +23,8 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
   	flexGrow: 5, 
-  	height:'100%', 
   	flex: 1,
+    
   	padding:4, 
   	paddingLeft:30,
   	paddingRight:10,
@@ -53,8 +54,8 @@ const CartView = (props) =>  {
 		     		<Text style={{fontFamily:'changa-one-regular', fontSize: 16}}>$ {totalCost}</Text>
 		     	</View>
 		     	<View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-		     		<Button title="Default" style={{borderColor: 'grey'}}/>
-		     		<Button title="Delete" /> 
+		     		<Button style={{borderColor: 'grey'}}> Default </Button>
+		     		<Button onPress={()=> alert('delete')}> Delete </Button> 
 		     	</View>
 		     </View>
 		  </Paper>

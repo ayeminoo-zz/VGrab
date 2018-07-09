@@ -135,7 +135,7 @@ export default class Home extends React.Component {
     return (
       <App navigation = {this.props.navigation} showFab={true} onFabClick={()=>this.props.navigation.navigate('QRScanner', {name: 'just testing'})}>
       
-      <Paper style={{elevation:1, justifyContent:'center', alignItems:'center', flexDirection: 'row', width:'100%', height: 40}}>
+      <Paper style={{elevation:1, marginTop:2, marginLeft:5, marginRight:5, justifyContent:'center', alignItems:'center', flexDirection: 'row', height: 40}}>
           <TextInput 
             textAlign={'center'}
             style={{flex:1}}
@@ -144,9 +144,8 @@ export default class Home extends React.Component {
           />        
       </Paper>
 
-      <ScrollView >
+      <ScrollView style={{paddingTop:10, backgroundColor:'#f4f5f7'}}>
           {items}
-
       </ScrollView>
 
         <Paper style={{elevation:3, justifyContent:'center', alignItems:'center', flexDirection: 'row', width:'100%', height: 50, flex:1, position:'absolute', bottom:0}}>

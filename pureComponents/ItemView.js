@@ -15,22 +15,24 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
+  
   paper: {
     flexDirection:'row',
-    padding: 5,
     height: 120,
-
+    marginLeft:5,
+    marginRight:5,
     alignItems: 'center',
     justifyContent: 'space-between',
     elevation: 2,
     marginBottom: 10,
   },
+
   rightContainer: {
     flexGrow: 5, 
     flex: 1,
     padding:4, 
     paddingLeft:30,
-    paddingRight:10,
+    paddingRight:5,
     justifyContent:'space-between', 
     alignItems:'stretch',
   },
@@ -49,9 +51,9 @@ const ItemView = (props) =>  {
           <Paper style={styles.paper}>
              <Image style={styles.stretch} source={imageSource} />
              <View style={styles.rightContainer}>
-              <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight: 5}}>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={{fontSize:18, color:'#545456'}}> {name}</Text>
-                  <Button onPress={onDelete} style={{padding:0, borderColor: 'transparent'}}><Icon name="clear" size={18}  color='#a8adb5'/> </Button>
+                  <Button onPress={onDelete} style={{position:'absolute', right:0, padding:0, borderColor: 'transparent'}}><Icon name="clear" size={18}  color='#a8adb5'/> </Button>
               </View>
 
               <Text style={{paddingLeft: 5, color:'#a8adb5'}}> $ {cost} / per  </Text>
