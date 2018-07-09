@@ -3,7 +3,21 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Toolbar, ToolbarBackAction, ToolbarContent, ToolbarAction } from 'react-native-paper';
 
-import { Text, View, Button,StyleSheet, Image } from 'react-native';
+import { ScrollView, View,StyleSheet, Image } from 'react-native';
+
+import {
+  Paper,
+  Text,
+  FAB,
+  TextInput,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardCover,
+  Title,
+  Paragraph
+} from 'react-native-paper';
 
 const styles = StyleSheet.create({
   icon: {
@@ -34,7 +48,58 @@ export default class History extends React.Component {
           <ToolbarAction icon="search" onPress={this._onSearch} />
           <ToolbarAction icon="more-vert" onPress={this._onMore} />
         </Toolbar> 
-        <Text> ok ok</Text>
+
+            <ScrollView horizontal= {true} >
+            <Card>
+    <CardContent>
+      <Title>Card title</Title>
+      <Paragraph>Card content</Paragraph>
+    </CardContent>
+    <CardCover source={{ uri: 'https://picsum.photos/700' }} />
+    <CardActions>
+      <Button>Cancel</Button>
+      <Button>Ok</Button>
+    </CardActions>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <Title>Card title</Title>
+      <Paragraph>Card content</Paragraph>
+    </CardContent>
+    <CardCover source={{ uri: 'https://picsum.photos/700' }} />
+    <CardActions>
+      <Button>Cancel</Button>
+      <Button>Ok</Button>
+    </CardActions>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <Title>Card title</Title>
+      <Paragraph>Card content</Paragraph>
+    </CardContent>
+    <CardCover source={{ uri: 'https://picsum.photos/700' }} />
+    <CardActions>
+      <Button>Cancel</Button>
+      <Button>Ok</Button>
+    </CardActions>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <Title>Card title</Title>
+      <Paragraph>Card content</Paragraph>
+    </CardContent>
+    <CardCover source={{ uri: 'https://picsum.photos/700' }} />
+    <CardActions>
+      <Button>Cancel</Button>
+      <Button>Ok</Button>
+    </CardActions>
+  </Card>
+        </ScrollView>
+      
+        
       </View>
       
     );
