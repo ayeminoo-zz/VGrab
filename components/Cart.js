@@ -52,6 +52,7 @@ export default class Cart extends React.Component {
   constructor(props) {
     super(props);
     this._addNewCard = this._addNewCard.bind(this);
+    this._deleteCart = this._deleteCart.bind(this);
   }
 
   static navigationOptions = {
@@ -62,19 +63,21 @@ export default class Cart extends React.Component {
   };
 
   componentDidMount(){
+    this.state.activeCartId = InMemoryData.activeCartId;
     this.setState({carts: this.getCarts()})
   }
 
   state = {
     carts:{},
     newCartName:'',
-    dialogVisiable: false
+    dialogVisiable: false,
+    activeCartId: null
   }
 
   getCarts = function(){
     let carts = [];
     for (var id in InMemoryData.carts) {
-      if( InMemoryData.carts.hasOwnProperty(id) ) {
+      if( InMemoryData.carts.hasOwnProperty(id) && InMemoryData.carts[id] ) {
         InMemoryData.carts[id].id = id;
         InMemoryData.carts[id].total = this._getTotalCost(InMemoryData.carts[id].items);
         carts.push(InMemoryData.carts[id]);
@@ -96,14 +99,23 @@ export default class Cart extends React.Component {
     this.setState({carts: this.getCarts()})
   }
 
+  _deleteCart = function(id){
+    InMemoryData.carts[id] = null;
+    this.setState({carts: this.getCarts()})
+  }
+
   render() {
     let carts = Array.from(this.state.carts, cart => 
       <CartView 
         key = {cart.id}
+        active = {cart.id === this.state.activeCartId}
         imageSource={require('../images/shirt.jpg')}   
         name = {cart.name}
         numberOfItem = {cart.items.length}
         totalCost = {cart.total}
+        onDelete = {()=> {this._deleteCart(cart.id)}}
+        onPress = {()=> this.props.navigation.navigate('Home', {cartId: cart.id})}
+        onClickActive = {()=> {InMemoryData.activeCartId = cart.id; this.setState({activeCartId: cart.id})}}
       />
     );
     return (
@@ -122,8 +134,8 @@ export default class Cart extends React.Component {
           cancle = 'Cancle'
           />
         }
-        
-      <ScrollView style={{backgroundColor:'#f4f5f7'}}>
+      
+      <ScrollView style={{backgroundColor:'#f4f5f7', paddingTop:20}}>
         {carts}
       </ScrollView>
       </App>

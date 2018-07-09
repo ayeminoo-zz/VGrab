@@ -61,7 +61,7 @@ export default class Home extends React.Component {
         InMemoryData.appLoaded = true;
       });  
     }
-    
+    this.preProcess();
     Linking.addEventListener('url', this._handleRedirect);
     this.state.cartId = InMemoryData.activeCartId;
     if(this.props.navigation.state.params && this.props.navigation.state.params.id){
@@ -80,6 +80,14 @@ export default class Home extends React.Component {
       'changa-one-regular': require('../fonts/changa-one.regular.ttf')
     });
     this.setState({loaded: true})
+  }
+
+  preProcess(){
+    if(!InMemoryData.activeCartId || !InMemoryData.carts[InMemoryData.activeCartId]){
+      let id = new Date().getTime();
+      InMemoryData.carts[id] = {name: 'Unnamed Cart', items:[]};
+      InMemoryData.activeCartId = id;
+    }
   }
 
   componentWillUnmount() {
@@ -153,7 +161,7 @@ export default class Home extends React.Component {
             <Text style={{fontSize:16, color:'#545456'}}> Total </Text>
             <Text style={{paddingLeft:8, fontFamily:'changa-one-regular', fontSize: 16}}>$ {totalCost}</Text>
           </View>
-          <Button style={{alignItems:'center', backgroundColor:'#2962ff', borderColor:'#2962ff', width:150}} color='white' title='Checkout'/> 
+          <Button style={{alignItems:'center', backgroundColor:'#2962ff', borderColor:'#2962ff', width:150}} color='white'>  Checkout </Button>
         
         </Paper>
       </App>
@@ -161,6 +169,7 @@ export default class Home extends React.Component {
   }
 
   _navigate = (url) => {
+    this.preProcess();
     console.log(url);
     let data = Linking.parse(url);
     console.log("navigate data", data);
@@ -177,6 +186,7 @@ export default class Home extends React.Component {
   };
 
   _handleRedirect = event => {
+    this.preProcess();
     console.log(event.url);
     WebBrowser.dismissBrowser();
     let data = Linking.parse(event.url);

@@ -1,6 +1,6 @@
 export default  {
 	appLoaded: false,
-	activeCartId: 1,
+	activeCartId: "1",
 
 	carts:{
 		"1":{

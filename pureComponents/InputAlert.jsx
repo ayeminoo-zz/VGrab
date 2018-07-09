@@ -32,6 +32,7 @@ const InputAlert = (props) =>  {
         	<Paper style={style.paper}>
 		     	<Text style={{fontSize:18, fontWeight:'bold'}}> {title} </Text>
 		     	<TextInput 
+		     		autoFocus={true}
 		     		style={{width: style.paper.width}}
 		            textAlign={'center'}
 		            value={value}

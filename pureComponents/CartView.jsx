@@ -34,15 +34,35 @@ const styles = StyleSheet.create({
   stretch: {
     width: 120,
     height: 120
+  },
+  triangleCorner: {
+    width:0,
+    height:0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderRightWidth: 50,
+    borderTopWidth: 50,
+    borderRightColor: 'transparent',
+    transform: [
+      {rotate: '90deg'}
+    ]
   }
 });
 
 const CartView = (props) =>  {
 	const newStyles = props.style || {};
-	let {imageSource, name, numberOfItem, totalCost} = props;
+	let {onClickActive, active, onPress, onDelete, onDefault, imageSource, name, numberOfItem, totalCost} = props;
 
 	return (
-		<Paper style={styles.paper}>
+    <TouchableOpacity
+         onPress={props.onPress}
+        >
+		  <Paper style={styles.paper}>
+
+          <TouchableOpacity style={{zIndex:5, position:'absolute',right:0,top:0}} onPress={onClickActive}>
+            <View style={[styles.triangleCorner, {borderTopColor: active ?'#2962ff': 'grey'}]} />
+          </TouchableOpacity>
+
 		     <Image style={styles.stretch} source={imageSource} />
 		     <View style={styles.rightContainer}>
 		     	<Text style={{fontSize:20, fontWeight:'bold'}}> {name} </Text>
@@ -53,12 +73,12 @@ const CartView = (props) =>  {
 		     	<View style={{flexDirection: 'row-reverse'}}> 
 		     		<Text style={{fontFamily:'changa-one-regular', fontSize: 16}}>$ {totalCost}</Text>
 		     	</View>
-		     	<View style={{flex:1, flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-		     		<Button style={{borderColor: 'grey'}}> Default </Button>
-		     		<Button onPress={()=> alert('delete')}> Delete </Button> 
+		     	<View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems:'flex-end'}}>
+		     		<Button onPress={onDelete}> Delete </Button> 
 		     	</View>
 		     </View>
 		  </Paper>
+    </TouchableOpacity>
 	)
 }
 
