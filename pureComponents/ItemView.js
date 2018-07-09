@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 
 const ItemView = (props) =>  {
   const newStyles = props.style || {};
-  let {imageSource, name, quantity, cost} = props;
+  let {imageSource, name, quantity, cost, onAdd, onRemove} = props;
 
   return (
           <Paper style={styles.paper}>
@@ -61,12 +61,12 @@ const ItemView = (props) =>  {
                 <Text style={{paddingLeft:8, fontFamily:'changa-one-regular', fontSize: 16}}>$ {quantity * cost}</Text>
 
                 <View style={{flexDirection:'row',  alignItems:'center'}}>
-                    <Button style={{padding:0, borderColor: 'transparent'}}><Icon name="remove" size={25} color='#a8adb5'/> </Button>
+                    <Button onPress={onRemove} style={{padding:0, borderColor: 'transparent'}}><Icon name="remove" size={25} color='#a8adb5'/> </Button>
                     <View style={{justifyContent:'center', alignItems:'center', width:30, height:30, borderColor: 'grey', borderStyle:'solid', borderWidth: 1, marginLeft:7, marginRight: 7}}>
                       <Text style={{fontSize:14}}> {quantity} </Text>
                     </View>
                     
-                    <Button style={{padding:0, borderColor: 'transparent'}}><Icon name="add" size={25}  color='#a8adb5'/> </Button>
+                    <Button onPress={onAdd} style={{padding:0, borderColor: 'transparent'}}><Icon name="add" size={25}  color='#a8adb5'/> </Button>
                 </View>
               </View>
              </View>

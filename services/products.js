@@ -238,6 +238,110 @@ const products ={
             "image": "https://res.cloudinary.com/debray/image/upload/v1530593949/image-9.jpg",
             "merchId": "1",
             "category": "clothes"
+        },
+        "1299": {
+            "id": 1299,
+            "name": "Happy Ninja Shirt",
+            "price": 18,
+            "image": "https://res.cloudinary.com/debray/image/upload/v1531032602/T_7_front.jpg",
+            "merchId": "2",
+            "category": "clothes"
+        },
+        "1300": {
+                    "id": 1300,
+                    "name": "Happy Ninja Hoodie",
+                    "price": 35,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032601/hoodie_4_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1298": {
+                    "id": 1298,
+                    "name": "Ninja Silhoutte",
+                    "price": 20,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032602/T_5_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1301": {
+                    "id": 1301,
+                    "name": "Ninja Hoodie",
+                    "price": 30,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032601/hoodie_6_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1339": {
+                    "id": 1339,
+                    "name": "Patient Ninja",
+                    "price": 35,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032601/hoodie_3_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1295": {
+                    "id": 1295,
+                    "name": "Premium Cloth",
+                    "price": 20,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032602/T_2_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1296": {
+                    "id": 1296,
+                    "name": "Ship your Idea Shirt",
+                    "price": 20,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032602/T_4_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1297": {
+                    "id": 1297,
+                    "name": "Ship your Idea Hoodie",
+                    "price": 20,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032601/hoodie_5_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1291": {
+                    "id": 1291,
+                    "name": "Woo Logo Shirt",
+                    "price": 18,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032602/T_1_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1292": {
+                    "id": 1292,
+                    "name": "Woo Logo Hoodie",
+                    "price": 35,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032601/hoodie_6_front.jpg ",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1293": {
+                    "id": 1293,
+                    "name": "Woo Ninja Shirt",
+                    "price": 20,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032602/T_6_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1294": {
+                    "id": 1294,
+                    "name": "Woo Ninja Hoodie",
+                    "price": 35,
+                    "image": "https://res.cloudinary.com/debray/image/upload/v1531032601/hoodie_3_front.jpg",
+                    "merchId": "2",
+                    "category": "clothes"
+                },
+        "1500": {
+            "id": 1500,
+            "name": "Musical Night Ticket",
+            "price": 60,
+            "image": "https://res.cloudinary.com/debray/image/upload/v1531032602/landingpage.jpg",
+            "merchId": "3",
+            "category": "ticket"
         }
     }
 

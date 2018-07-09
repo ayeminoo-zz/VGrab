@@ -106,6 +106,14 @@ export default class Home extends React.Component {
                       cost={item.price}
                       quantity={item.quantity}
                       name={item.name}
+                      onAdd={()=> {
+                        this._addToCart(item.id); 
+                        this.setState({ items: InMemoryData.carts[InMemoryData.activeCartId].items});
+                      }}
+                      onRemove={()=>{
+                        this._removeFromCart(item.id);
+                        this.setState({ items: InMemoryData.carts[InMemoryData.activeCartId].items});
+                      }}
                     />);
     let totalCost = 0;
     this.state.items.forEach(item=>{
@@ -156,6 +164,25 @@ export default class Home extends React.Component {
     this.setState({ items: InMemoryData.carts[InMemoryData.activeCartId].items});
 
   };
+
+  _removeFromCart = function(id){
+    console.log('remove')
+    id = typeof id === 'string'? parseInt(id) : id;
+    let items = InMemoryData.carts[InMemoryData.activeCartId].items;
+    let found = false;
+    items.forEach(item => {
+      console.log(id + " " + item.id, id === item.id)
+      if(id === item.id) {
+        item.quantity -= 1; 
+        found = true;
+        console.log("found", found);
+      }
+    });
+
+    if(found){
+      InMemoryData.carts[InMemoryData.activeCartId].items = items.filter((item)=>item.quantity > 0);
+    }
+  }
 
   _addToCart = function(id){
     id = typeof id === 'string'? parseInt(id) : id;
