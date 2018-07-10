@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 
 const ItemView = (props) =>  {
   const newStyles = props.style || {};
-  let {imageSource, name, quantity, cost, onAdd, onRemove, onDelete} = props;
+  let {readOnly, imageSource, name, quantity, cost, onAdd, onRemove, onDelete} = props;
 
   return (
           <Paper style={styles.paper}>
@@ -53,7 +53,7 @@ const ItemView = (props) =>  {
              <View style={styles.rightContainer}>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={{fontSize:18, color:'#545456'}}> {name}</Text>
-                  <Button onPress={onDelete} style={{position:'absolute', right:0, padding:0, borderColor: 'transparent'}}><Icon name="clear" size={18}  color='#a8adb5'/> </Button>
+                  {!readOnly && <Button onPress={onDelete} style={{position:'absolute', right:0, padding:0, borderColor: 'transparent'}}><Icon name="clear" size={18}  color='#a8adb5'/> </Button> }
               </View>
 
               <Text style={{paddingLeft: 5, color:'#a8adb5'}}> $ {cost} / per  </Text>
@@ -62,12 +62,13 @@ const ItemView = (props) =>  {
                 <Text style={{paddingLeft:8, fontFamily:'changa-one-regular', fontSize: 16}}>$ {quantity * cost}</Text>
 
                 <View style={{flexDirection:'row',  alignItems:'center'}}>
-                    <Button onPress={onRemove} style={{padding:0, borderColor: 'transparent'}}><Icon name="remove" size={25} color='#a8adb5'/> </Button>
+                    {!readOnly && <Button onPress={onRemove} style={{padding:0, borderColor: 'transparent'}}><Icon name="remove" size={25} color='#a8adb5'/> </Button> }
+                    
                     <View style={{justifyContent:'center', alignItems:'center', width:30, height:30, borderColor: 'grey', borderStyle:'solid', borderWidth: 1, marginLeft:7, marginRight: 7}}>
                       <Text style={{fontSize:14}}> {quantity} </Text>
                     </View>
                     
-                    <Button onPress={onAdd} style={{padding:0, borderColor: 'transparent'}}><Icon name="add" size={25}  color='#a8adb5'/> </Button>
+                    {!readOnly && <Button onPress={onAdd} style={{padding:0, borderColor: 'transparent'}}><Icon name="add" size={25}  color='#a8adb5'/> </Button> }
                 </View>
               </View>
              </View>

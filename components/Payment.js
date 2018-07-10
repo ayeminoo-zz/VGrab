@@ -126,6 +126,9 @@ export default class Payment extends React.Component {
     .then(function(myJson) {
       console.log(myJson)
     });
+
+    this.props.navigation.navigate('OrderConfirm', {cartId: this.state.cartId});
+
   }
 
   render() {

@@ -11,6 +11,7 @@ import Profile from './components/Profile';
 import App from './components/App';
 import Home from './components/Home';
 import QRScanner from './components/QRScanner';
+import ConfirmPage from './components/ConfirmPage';
 
 class MyNotificationsScreen extends React.Component {
   static navigationOptions = {
@@ -60,6 +61,9 @@ export default createDrawerNavigator({
     screen: Payment
   },
 
+  OrderConfirm:{
+    screen: ConfirmPage
+  },
   Profile:{
     screen: Profile
   },
