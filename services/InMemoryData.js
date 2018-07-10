@@ -14,8 +14,25 @@ export default  {
 		            "merchId": "1",
 		            "category": "clothes", 
 		            "quantity": 1
+		        },
+
+		        {
+		            "id": 2,
+		            "name": "Black floral full sleeve Dress ",
+		            "price": 60,
+		            "image": "https://res.cloudinary.com/debray/image/upload/v1530593949/image-16.jpg",
+		            "merchId": "1",
+		            "category": "clothes",
+		            "quantity": 2
+
 		        }
 			]
 		}
+	},
+
+	profile: {
+		email: 'ayeminoosc@gmail.com',
+		name: 'Aye Min Oo',
+
 	}
 }

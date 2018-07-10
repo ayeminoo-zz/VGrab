@@ -161,7 +161,7 @@ export default class Home extends React.Component {
             <Text style={{fontSize:16, color:'#545456'}}> Total </Text>
             <Text style={{paddingLeft:8, fontFamily:'changa-one-regular', fontSize: 16}}>$ {totalCost}</Text>
           </View>
-          <Button style={{alignItems:'center', backgroundColor:'#2962ff', borderColor:'#2962ff', width:150}} color='white'>  Checkout </Button>
+          <Button onPress={()=>{this.props.navigation.navigate('Pay', {cartId: this.state.cartId, totalCost: totalCost})}} style={{alignItems:'center', backgroundColor:'#2962ff', borderColor:'#2962ff', width:150}} color='white'>  Checkout </Button>
         
         </Paper>
       </App>

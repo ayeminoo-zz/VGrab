@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text,StatusBar, TouchableHighlight, Platform, ToolbarAndroid, Image, Button, View, StyleSheet } from 'react-native';
 import { createDrawerNavigator } from 'react-navigation';
 import Cart from './components/Cart';
-import History from './components/History';
+import Payment from './components/Payment';
 import Profile from './components/Profile';
 import App from './components/App';
 import Home from './components/Home';
@@ -56,8 +56,8 @@ export default createDrawerNavigator({
     screen: QRScanner
   },
 
-  History:{
-    screen: History
+  Pay:{
+    screen: Payment
   },
 
   Profile:{

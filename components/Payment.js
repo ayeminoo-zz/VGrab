@@ -10,6 +10,7 @@ import {
 
 import {   
 Dimensions, ScrollView, View, StyleSheet, Image } from "react-native";
+import InMemoryData from '../services/InMemoryData';
 
 import {
   Paper,
@@ -48,15 +49,84 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class History extends React.Component {
+export default class Payment extends React.Component {
+  constructor(props) {
+    super(props);
+    this.pay = this.pay.bind(this);
+    this.getOrder = this.getOrder.bind(this);
+  }
+
   static navigationOptions = {
-    drawerLabel: "History",
+    drawerLabel: "Pay",
     drawerIcon: ({ tintColor }) => (
       <Icon name={"history"} size={25} color={tintColor} />
     )
   };
 
-  
+  componentDidMount(){
+    if(this.props.navigation.state.params && this.props.navigation.state.params.totalCost){
+        this.setState({cartId: this.props.navigation.state.params.cartId, totalCost: this.props.navigation.state.params.totalCost});
+        this.props.navigation.state.params = null;
+    }
+  }
+
+  state={
+    cartId: null,
+    totalCost: 0
+  }
+
+  getOrder =  function(cartId){
+      let merchants = {};
+      let items = InMemoryData.carts[cartId].items;
+      items.forEach(item => {
+        if(merchants[item.id]) {
+          merchants[item.id].merchant = item.merchId;
+          merchants[item.id].total = merchants[item.id].total + (item.price * item.quantity);
+        }else{
+          merchants[item.id] = {
+            merchant: item.merchId,
+            toal: item.price * item.quantity
+          }
+        }
+
+        merchants[item.id].products = merchants[item.id].products || []; 
+        for(let i= 0; i < item.quantity; i++){
+          merchants[item.id].products.push(item.id);
+        }
+
+      });
+      return merchants;
+  }
+
+  pay = function(){
+    let orders = this.getOrder(this.state.cartId);
+    let data = [];
+    for (var id in orders) {
+      if( orders.hasOwnProperty(id) && orders[id] ) {
+        data.push(orders[id]);
+      } 
+    }
+    let payjson = {
+      to: InMemoryData.profile.email,
+      orders: data
+    }
+
+    let dataString = JSON.stringify(payjson);
+    fetch('https://wt-a55482131682f68f0684b6776a1efad3-0.sandbox.auth0-extend.com/sendMail/trigger', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: dataString
+    }).then(function(response) {
+      console.log(response)
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(myJson)
+    });
+  }
 
   render() {
     return (
@@ -65,8 +135,8 @@ export default class History extends React.Component {
         <View style={{backgroundColor: backgroundColor, flexDirection: 'row', height: 20}}/>                                                
         <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', backgroundColor: backgroundColor, height:50}}>
           <ToolbarBackAction  style={{position:'absolute', left:0}}                                          
-          onPress={this._goBack} />
-          <Text style={{color:'white'}}> Payment Method</Text>
+          onPress={() => this.props.navigation.goBack()} />
+          <Text style={{color:'white', fontSize:18}}> Payment Method</Text>
         </View>
         <ScrollView style={{backgroundColor: backgroundColor}} horizontal={true}>
           <Paper style={{padding:10, backgroundColor: backgroundColor}}>
@@ -101,7 +171,9 @@ export default class History extends React.Component {
               <Text style={styles.text}> Card Type </Text>
               <Image source={require('../images/visa.png')} style={styles.visalogo} />
           </Paper>
-            <Button color='white' style={{alignItems:'center', marginTop:10, marginLeft:50, marginRight:50, backgroundColor: backgroundColor, borderColor: backgroundColor}}> Pay $200 </Button>
+            <Button
+             onPress={this.pay}
+             color='white' style={{alignItems:'center', marginTop:10, marginLeft:50, marginRight:50, backgroundColor: backgroundColor, borderColor: backgroundColor}}> Pay ${this.state.totalCost} </Button>
         </View>
       </View>
     );
