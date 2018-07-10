@@ -131,7 +131,7 @@ export default class Cart extends React.Component {
           onCancle = {()=>{this.state.newCartName=''; this.setState({dialogVisiable: false})}}
           onChangeText = {(text) => {this.setState({newCartName: text})}}
           ok = 'OK'
-          cancle = 'Cancle'
+          cancle = 'Cancel'
           />
         }
       
