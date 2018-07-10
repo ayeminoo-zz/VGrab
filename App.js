@@ -49,6 +49,7 @@ export default createDrawerNavigator({
   Home: {
     screen: Home,
   },
+  
   Cart:{
     screen: Cart
   },
@@ -67,9 +68,5 @@ export default createDrawerNavigator({
   Profile:{
     screen: Profile
   },
-
-  Notifications: {
-    screen: MyNotificationsScreen,
-  }
 
 });

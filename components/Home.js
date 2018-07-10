@@ -111,6 +111,8 @@ export default class Home extends React.Component {
     ),
   };
 
+
+
   render() {
     if(!this.state.loaded) return <View/>;
   
@@ -121,6 +123,8 @@ export default class Home extends React.Component {
                       quantity={item.quantity}
                       name={item.name}
                       
+                      name2={InMemoryData.merchants[item.merchId].name}
+
                       onDelete={()=>{
                         this._removeFromCart(item.id, true);
                         this.setState({ items: InMemoryData.carts[this.state.cartId].items});
@@ -147,7 +151,7 @@ export default class Home extends React.Component {
           <TextInput 
             textAlign={'center'}
             style={{flex:1}}
-            onChangeText={(text) => this.setState({name: text})}
+            onChangeText={(text) => {InMemoryData.carts[this.state.cartId].name = text; this.setState({name: text})}}
             value={this.state.name}
           />        
       </Paper>

@@ -9,7 +9,7 @@ import {
 } from "react-native-paper";
 
 import {   
-Dimensions, ScrollView, View, StyleSheet, Image } from "react-native";
+Dimensions, ScrollView,ActivityIndicator, View, StyleSheet, Image } from "react-native";
 import InMemoryData from '../services/InMemoryData';
 
 import {
@@ -72,7 +72,8 @@ export default class Payment extends React.Component {
 
   state={
     cartId: null,
-    totalCost: 0
+    totalCost: 0,
+    loading: false
   }
 
   getOrder =  function(cartId){
@@ -125,10 +126,10 @@ export default class Payment extends React.Component {
     })
     .then(function(myJson) {
       console.log(myJson)
-    });
+          this.props.navigation.navigate('OrderConfirm', {cartId: this.state.cartId});
+    }.bind(this));
 
-    this.props.navigation.navigate('OrderConfirm', {cartId: this.state.cartId});
-
+    this.setState({loading: true});
   }
 
   render() {
@@ -163,9 +164,9 @@ export default class Payment extends React.Component {
         <View style={{flex:1, padding:20, backgroundColor: '#f4f5f7'}}>
           <Text style={styles.text}> Shipping To </Text>
           <Paper style={styles.paper}>
-              <Text> Aye Min </Text>
-              <Text style={styles.text}> 22 lor 35 geyland </Text>
-              <Text style={styles.text}> ayeminoosc@gmail.com </Text>
+              <Text> {InMemoryData.profile.name} </Text>
+              <Text style={styles.text}> {InMemoryData.profile.address}</Text>
+              <Text style={styles.text}> {InMemoryData.profile.email} </Text>
           </Paper>
 
           <Text style={[styles.text, {marginTop:20}]}> Paying With </Text>
@@ -174,9 +175,13 @@ export default class Payment extends React.Component {
               <Text style={styles.text}> Card Type </Text>
               <Image source={require('../images/visa.png')} style={styles.visalogo} />
           </Paper>
+          {this.state.loading && <ActivityIndicator size="small" color="#2962ff" />}
             <Button
              onPress={this.pay}
-             color='white' style={{alignItems:'center', marginTop:10, marginLeft:50, marginRight:50, backgroundColor: backgroundColor, borderColor: backgroundColor}}> Pay ${this.state.totalCost} </Button>
+             loading={this.state.loading}
+             color='white' style={{alignItems:'center', marginTop:10, marginLeft:50, marginRight:50, backgroundColor: backgroundColor, borderColor: backgroundColor}}>
+              Pay $ {this.state.totalCost}
+              </Button>
         </View>
       </View>
     );

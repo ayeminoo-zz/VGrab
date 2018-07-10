@@ -13,7 +13,7 @@ const App = (props) =>{
             onPress={props.onFabClick}
           />: null;
   return (
-      <View style={{flex:1}}>
+      <View style={[{flex:1}, props.style]}>
         
         {fab}
 

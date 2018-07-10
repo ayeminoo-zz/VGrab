@@ -51,6 +51,7 @@ export default class Cart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.sendCampaignNotification = this.sendCampaignNotification.bind(this);
     this._addNewCard = this._addNewCard.bind(this);
     this._deleteCart = this._deleteCart.bind(this);
   }
@@ -61,6 +62,16 @@ export default class Cart extends React.Component {
       <Icon name={'shopping-cart'} size={25} color={tintColor} />
     ),
   };
+
+  sendCampaignNotification= function(){
+    fetch(`https://wt-a55482131682f68f0684b6776a1efad3-0.sandbox.auth0-extend.com/sendMail/campaign?name=${this.state.newCartName}&email=${InMemoryData.profile.email}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+  }
 
   componentDidMount(){
     this.state.activeCartId = InMemoryData.activeCartId;
@@ -92,7 +103,10 @@ export default class Cart extends React.Component {
     return total;
   }
 
-  _addNewCard = function(){
+  _addNewCard = function(campaign){
+    if(campaign === true){
+      this.sendCampaignNotification();
+    }
     InMemoryData.carts[new Date().getTime()] = {name: this.state.newCartName, items:[]};
     this.state.newCartName = '';
     this.state.dialogVisiable = false;

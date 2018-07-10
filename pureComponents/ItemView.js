@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   
   paper: {
     flexDirection:'row',
-    height: 120,
+    height: 140,
     marginLeft:5,
     marginRight:5,
     alignItems: 'center',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 
 const ItemView = (props) =>  {
   const newStyles = props.style || {};
-  let {readOnly, imageSource, name, quantity, cost, onAdd, onRemove, onDelete} = props;
+  let {name2, readOnly, imageSource, name, quantity, cost, onAdd, onRemove, onDelete} = props;
 
   return (
           <Paper style={styles.paper}>
@@ -55,9 +55,8 @@ const ItemView = (props) =>  {
                   <Text style={{fontSize:18, color:'#545456'}}> {name}</Text>
                   {!readOnly && <Button onPress={onDelete} style={{position:'absolute', right:0, padding:0, borderColor: 'transparent'}}><Icon name="clear" size={18}  color='#a8adb5'/> </Button> }
               </View>
-
+              <Text style={{paddingLeft: 5, color:'#a8adb5'}}> {name2} </Text>
               <Text style={{paddingLeft: 5, color:'#a8adb5'}}> $ {cost} / per  </Text>
-            
               <View style={{flex:1, paddingTop: 8, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text style={{paddingLeft:8, fontFamily:'changa-one-regular', fontSize: 16}}>$ {quantity * cost}</Text>
 

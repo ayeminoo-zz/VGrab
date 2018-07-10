@@ -17,7 +17,7 @@ const style = {
 		zIndex:10
 	},
 	paper: {
-        width:300, 
+        width:350, 
         elevation:6,
         padding: 10, 
         alignItems:'center'
@@ -41,6 +41,7 @@ const InputAlert = (props) =>  {
 		          />  
 		         <View style={{width:style.paper.width, padding:5, flexDirection:'row', justifyContent:'flex-end'}}>
 		         	<Button onPress={onCancle} style={{marginRight:30}}> {cancle} </Button>
+		         	<Button onPress={() => onOk(true)} style={{borderColor:'green', marginRight:20}}> {"Create Campaign"} </Button>
 		         	<Button onPress={onOk} style={{borderColor:'green', marginRight:20}}> {ok} </Button>
 		         </View>
       		</Paper>
