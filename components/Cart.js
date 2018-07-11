@@ -104,10 +104,12 @@ export default class Cart extends React.Component {
   }
 
   _addNewCard = function(campaign){
+    let uid = new Date().getTime();
+    InMemoryData.carts[uid] = {name: this.state.newCartName, items:[]};
     if(campaign === true){
       this.sendCampaignNotification();
+      InMemoryData.carts[uid].camp = true;
     }
-    InMemoryData.carts[new Date().getTime()] = {name: this.state.newCartName, items:[]};
     this.state.newCartName = '';
     this.state.dialogVisiable = false;
     this.setState({carts: this.getCarts()})
@@ -125,6 +127,7 @@ export default class Cart extends React.Component {
         active = {cart.id === this.state.activeCartId}
         imageSource={require('../images/shirt.jpg')}   
         name = {cart.name}
+        camp = {cart.camp}
         numberOfItem = {cart.items.length}
         totalCost = {cart.total}
         onDelete = {()=> {this._deleteCart(cart.id)}}

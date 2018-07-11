@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 
 const CartView = (props) =>  {
 	const newStyles = props.style || {};
-	let {onClickActive, active, onPress, onDelete, onDefault, imageSource, name, numberOfItem, totalCost} = props;
+	let {camp, onClickActive, active, onPress, onDelete, onDefault, imageSource, name, numberOfItem, totalCost} = props;
 
 	return (
     <TouchableOpacity
@@ -72,6 +72,7 @@ const CartView = (props) =>  {
 		     	</View>
 		     	<View style={{flexDirection: 'row-reverse'}}> 
 		     		<Text style={{fontFamily:'changa-one-regular', fontSize: 16}}>$ {totalCost}</Text>
+            {camp && <Image source={require('../images/campaign.png')} style={{height:20, width:20, position:'absolute', right: 5}} />}
 		     	</View>
 		     	<View style={{flex:1, flexDirection:'row', justifyContent:'center', alignItems:'flex-end'}}>
 		     		<Button onPress={onDelete}> Delete </Button> 

@@ -61,6 +61,7 @@ export default class QRScanner extends React.Component {
               this.state.hasCameraPermission === false ?
                 <Text>Camera permission is not granted</Text> :
                 <BarCodeScanner
+                  barCodeTypes ={[BarCodeScanner.Constants.BarCodeType.qr]}
                   onBarCodeRead={this._handleBarCodeRead}
                   style={{
                     height: Dimensions.get('window').height,
@@ -68,6 +69,7 @@ export default class QRScanner extends React.Component {
                   }}
                 />
             }
+            <View style={{width:200, backgroundColor:'transparent', borderColor: 'white', borderWidth:1, borderStyle: 'solid', zIndex:10, height:200, position:'absolute'}} />
           </View>
       </View>
       
