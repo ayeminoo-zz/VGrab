@@ -1,16 +1,20 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Toolbar, ToolbarBackAction, ToolbarContent, ToolbarAction } from 'react-native-paper';
-import { Constants,Linking, BarCodeScanner, Permissions } from 'expo';
+import { Paper, Text, Toolbar, ToolbarBackAction, ToolbarContent, ToolbarAction } from 'react-native-paper';
 
+import { BarCodeScanner, Permissions } from 'expo';
   
-import { View, Button,StyleSheet, Alert, Image } from 'react-native';
 import {
-  Paper,
-  Text,
-  FAB
-} from 'react-native-paper';
+  Dimensions,
+  LayoutAnimation,
+  View,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+
 const styles = StyleSheet.create({
   icon: {
     width: 24,
@@ -57,19 +61,22 @@ export default class QRScanner extends React.Component {
               this.state.hasCameraPermission === false ?
                 <Text>Camera permission is not granted</Text> :
                 <BarCodeScanner
-                  onBarcodeRead={this._handleBarCodeRead}
-                  style={{ height: 200, width: 200 }}
+                  onBarCodeRead={this._handleBarCodeRead}
+                  style={{
+                    height: Dimensions.get('window').height,
+                    width: Dimensions.get('window').width,
+                  }}
                 />
             }
           </View>
       </View>
+      
       
     );
   }
 
   componentDidMount() {
     this._requestCameraPermission();
-    // Alert.alert("ok", JSON.stringify(this.props.navigation.state.params.name));
   }
 
   _requestCameraPermission = async () => {
@@ -80,22 +87,14 @@ export default class QRScanner extends React.Component {
   };
 
   _handleBarCodeRead = data => {
-
-    data = Linking.parse(data.data);
-    console.log("data", data)
-    if(!data.queryParams || !data.queryParams.id)
-    this.props.navigation.navigate('Home', {id: data.queryParams.id});
-
-
-    // console.log(data);
-    // console.log("regex", this.regex);
-    // if(!data || !data.data) return;
-    // console.log(data.data);
-    // let found = this.regex.test(data.data);
-    // console.log("found", found)
-    // if(!found) return;
-    // let id = data.data.replace(this.regex, "");
-    // console.log("id", id);
-    // this.props.navigation.navigate('Home', {id: id});
+    console.log("regex", this.regex);
+    if(!data || !data.data) return;
+    console.log(data.data);
+    let found = this.regex.test(data.data);
+    console.log("found", found)
+    if(!found) return;
+    let id = data.data.replace(this.regex, "");
+    console.log("id", id);
+    this.props.navigation.navigate('Home', {id: id});
   };
 }

@@ -65,7 +65,7 @@ export default class Home extends React.Component {
     Linking.addEventListener('url', this._handleRedirect);
     this.state.cartId = InMemoryData.activeCartId;
     if(this.props.navigation.state.params && this.props.navigation.state.params.id){
-      InMemoryData.carts[InMemoryData.activeCartId].items.push(products[this.props.navigation.state.params.id]);
+      this._addToCart(this.props.navigation.state.params.id);
       this.props.navigation.state.params = null;
     }else if(this.props.navigation.state.params && this.props.navigation.state.params.cartId){
       this.state.cartId = this.props.navigation.state.params.cartId;
